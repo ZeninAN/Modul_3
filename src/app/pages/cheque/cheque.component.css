@@ -1,0 +1,47 @@
+.container {
+    border: 2px solid black;
+    padding: 20px;
+    width: 600px; 
+    margin: 0 auto; 
+}
+
+.form-row {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    display: inline-block;
+    width: 150px; 
+    font-weight: bold;
+}
+
+.input-line {
+    border-bottom: 1px dashed black;
+    width: 300px;
+    display: inline-block;
+}
+
+.checkboxes {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.checkbox {
+    border: 1px solid black;
+    width: 15px;
+    height: 15px;
+    margin-bottom: 5px;
+}
+
+.button {
+    background-color: #ddd;
+    border: 1px solid black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 20px auto; 
+    width: 200px; 
+    border-radius: 5px;
+}
