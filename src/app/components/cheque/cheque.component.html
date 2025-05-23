@@ -1,0 +1,87 @@
+<title>Товарный чек</title>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet"
+        href="C:\Users\azeni\Desktop\цк\Модуль 3\your-app-name\src\app\pages\cheque\cheque.component.css">
+</head>
+<style>
+    body {
+        font-family: sans-serif;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <h1>Договор</h1>
+        <div class="form-row">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-row">
+                    <span class="form-label" for="numcontract">Номер договора:</span>
+                    <input type="number" id="numcontract" formControlName="numcontract" class="form-control"/>
+                </div>
+                
+
+                <div class="form-row">
+                    <span class="form-label" for="username">Покупатель:</span>
+                    <input type="text" id="username" formControlName="username" class="form-control"/>
+                  </div>
+
+                <div class="form-row">
+                    <span class="form-label">Продавец:</span>
+                    <a>Дилер немецких автомобилей</a>
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label">Поставщик:</span>
+                    <a>ОАО Зенин</a>
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label" for="machine">Машина:</span>
+                    <select id="machine" formControlName="machine" class="form-control">
+                        <option value="macan">Porsche Macan</option>
+                        <option value="911">Porsche 911 S/T</option>
+                        <option value="panamera">Porsche Panamera</option>
+                        <option value="bmw4">BMW 4 серии Coupe</option>
+                        <option value="bmw8">BMW 8 серии</option>
+                        <option value="bmwx7">BMW X7</option>
+                        <option value="bmwz4">BMW Z4 Roadster</option>
+                        <option value="bmwm3">BMW M3 Competition</option>
+                      </select>
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label">Цена оплаты:</span>
+                    <input type="text" id="cost" formControlName="cost" class="form-control">
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label" for="status">Статус оформления:</span>
+                    <select id="status" formControlName="status" class="form-control">
+                        <option>Одобрено</option>
+                        <option>Проверяется</option>
+                        <option>Отказано</option>
+                      </select>
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label">Гарантия:</span>
+                    <input type="checkbox">
+                </div>
+
+                <div class="form-row">
+                    <span class="form-label">Дата заключения договора:</span>
+                    <time datetime="2023-10-26">26 октября 2023</time>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Сохранить данные
+                </button>
+                <button (click)="select()">Перейти к списку</button>
+
+                    
+         
+    

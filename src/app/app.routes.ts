@@ -1,14 +1,29 @@
 import { Routes } from '@angular/router';
-import {CatalogComponent} from "./pages/catalog/catalog.component";
-import {ChequeComponent} from "./pages/cheque/cheque.component";
+import {CatalogpgComponent} from './pages/catalogpg/catalogpg.component';
+import {ChequeComponent} from './components/cheque/cheque.component';
+import {UserComponent} from './components/user/user.component';
 
 export const routes: Routes = [
     {
-        component: CatalogComponent,
-        path: './pages/catalog/catalog.component',
+        path: '',
+        redirectTo: 'catalog',
+        pathMatch: 'full',
     },
     {
-        component: ChequeComponent,
-        path: './pages/cheque/cheque.component',
+        component:CatalogpgComponent,
+        path:'catalog', 
+        
     },
+    {
+        component:ChequeComponent,
+        path:'cheque', 
+    },
+    {
+        component:UserComponent,
+        path:'user', 
+    },
+    {
+        component:ChequeComponent,
+        path:'cheque/:id', 
+    }
 ];
