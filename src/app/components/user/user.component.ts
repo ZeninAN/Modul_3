@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { Router } from '@angular/router';
-import { Contract } from '../cheque/cheque.component';
+import { ContractService, Contract } from '../../services/chequecompletion.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'user',
@@ -36,24 +36,24 @@ export class UserComponent {
     loadContracts() {
       const dataString = localStorage.getItem(this.localStorageKey);
 
-    if (dataString) {
-      try {
-        const parsedData: Contract[] = JSON.parse(dataString);
-        if (Array.isArray(parsedData)) {
-          this.users = parsedData;
-          console.log('Данные успешно загружены из localStorage:', this.users);
-        } else {
-          console.error('Ошибка: данные в localStorage не являются массивом.');
+      if (dataString) {
+        try {
+          const parsedData: Contract[] = JSON.parse(dataString);
+          if (Array.isArray(parsedData)) {
+            this.users = parsedData;
+            console.log('Данные успешно загружены из localStorage:', this.users);
+          } else {
+            console.error('Ошибка: данные в localStorage не являются массивом.');
+            this.users = []; 
+          }
+        } catch (error) {
+          console.error('Ошибка при разборе JSON из localStorage:', error);
           this.users = []; 
         }
-      } catch (error) {
-        console.error('Ошибка при разборе JSON из localStorage:', error);
+      } else {
+        console.warn(`Данные по ключу '${this.localStorageKey}' в localStorage не найдены.`);
         this.users = []; 
       }
-    } else {
-      console.warn(`Данные по ключу '${this.localStorageKey}' в localStorage не найдены.`);
-      this.users = []; 
-    }
     }
     editContracts(chequeId:number) {
       this.router.navigate(['/cheque', chequeId]);

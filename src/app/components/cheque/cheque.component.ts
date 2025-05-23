@@ -1,19 +1,12 @@
 import {MenuItem} from 'primeng/api';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContractService } from '../../services/chequecompletion.service';
 import { FormsModule }   from '@angular/forms'
 import { ActivatedRoute,Router } from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { ContractService, Contract } from '../../services/chequecompletion.service';
 
-export interface Contract {
-  numcontract: number;
-  username: string;
-  machine: string;
-  cost : number;
-  status: string;
-}
 @Component({
   selector: 'cheque',
   imports: [ReactiveFormsModule, CommonModule,FormsModule ],
@@ -35,19 +28,11 @@ export class ChequeComponent {
   storageKey = 'Contracts';
   editingNumContract: number | null = null; 
   isEditMode = false; 
-  machinePrices: { [key: string]: number } = {
-    'macan': 7000000,
-    '911': 9000000,
-    'panamera': 6700000,
-    'bmw4': 8000000,
-    'bmw8': 11000000,
-    'bmwx7': 7500000,
-    'bmwz4': 12000000,
-    'bmwm3': 5000000,
-  };
+  machinePrices: { [key: string]: number };
   private machineValueChangesSubscription: Subscription | undefined; 
 
-  constructor(private fb: FormBuilder,private router : Router,private route: ActivatedRoute ) {
+  constructor(private fb: FormBuilder,private router : Router,private route: ActivatedRoute,private contractService: ContractService ) {
+    this.machinePrices = this.contractService.getMachinePrices();
     this.signUpForm = this.fb.group({
       numcontract: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       username: ['', Validators.required],
@@ -66,7 +51,7 @@ export class ChequeComponent {
       this.editingNumContract = +idParam; 
 
       
-      const contracts = this.loadLS();
+      const contracts = this.contractService.loadLS();
 
       
       const recordToEdit = contracts.find(contract => contract.numcontract === this.editingNumContract);
@@ -124,7 +109,7 @@ export class ChequeComponent {
 
     const formData = this.signUpForm.getRawValue() as Contract;
 
-    const existingData = this.loadLS();
+    const existingData = this.contractService.loadLS();
 
     if (this.isEditMode) {
       const indexToUpdate = existingData.findIndex(contract => contract.numcontract === this.editingNumContract);
@@ -135,7 +120,7 @@ export class ChequeComponent {
              numcontract: this.editingNumContract! 
         };
 
-        this.saveLS(existingData);
+        this.contractService.saveLS(existingData);
 
         console.log('Данные записи успешно обновлены:', formData);
         alert('Данные обновлены успешно!'); 
@@ -158,7 +143,7 @@ export class ChequeComponent {
 
       existingData.push(formData);
 
-      this.saveLS(existingData);
+      this.contractService.saveLS(existingData);
 
       console.log('Новая запись успешно сохранена:', formData);
       alert('Данные сохранены успешно!'); 
@@ -166,26 +151,4 @@ export class ChequeComponent {
       this.signUpForm.reset();
     }
   }
-
-  private loadLS(): Contract[] {
-    try {
-      const data = localStorage.getItem(this.storageKey);
-      return data ? JSON.parse(data) : [];
-    } catch (error) {
-      console.error('Ошибка загрузки из localStorage:', error);
-      return []; 
-    }
-  }
-
-  
-  private saveLS(contracts: Contract[]): void {
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(contracts));
-    } catch (error) {
-      console.error('Ошибка сохранения в localStorage:', error);
-      alert('Ошибка сохранения данных!');
-    }
-  }
-
-  
 }
